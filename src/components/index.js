@@ -1,0 +1,9 @@
+export { Navbar } from './Navbar';
+export { HeroSection } from './HeroSection';
+export { DiningTable } from './DiningTable';
+export { Philosopher } from './Philosopher';
+export { Fork } from './Fork';
+export { ControlPanel } from './ControlPanel';
+export { ExplanationPanel } from './ExplanationPanel';
+export { Timeline } from './Timeline';
+export { Footer } from './Footer';
