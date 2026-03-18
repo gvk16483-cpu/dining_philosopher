@@ -135,9 +135,6 @@ function ImmersiveScene() {
   const philosophers = useSimulationStore(s => s.philosophers);
   const forks = useSimulationStore(s => s.forks);
 
-  // Fork holdership is now securely stored directly in the `forks` array as philosopher IDs
-  // preventing visual bugs where an adjacent thinker claimed a fork visually.
-
   return (
     <>
       {/* Lighting */}
@@ -162,8 +159,7 @@ function ImmersiveScene() {
       })}
 
       {forks.map((forkState, i) => {
-        // forkState is either 'available' or the numerical ID of the philosopher holding it
-        const holderId = forkState === 'available' ? null : forkState;
+         const holderId = forkState === 'available' ? null : forkState;
         const holderState = holderId !== null ? philosophers[holderId]?.state : null;
         return (
           <ForkModel
