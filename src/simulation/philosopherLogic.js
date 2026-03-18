@@ -75,29 +75,24 @@ export class PhilosopherSimulation {
 }
 
 export const simulateNormalDining = (store, philosophers) => {
-  // Each philosopher cycles through: thinking -> hungry -> eating -> thinking
-  // Only if both forks are available can they eat
   
   const updates = philosophers.map((phil, index) => {
     const sim = new PhilosopherSimulation(index, store);
     
     switch (phil.state) {
       case STATES.THINKING:
-        // Randomly transition to hungry
         if (Math.random() < 0.3) {
           return { id: index, state: STATES.HUNGRY };
         }
         return phil;
       
       case STATES.HUNGRY:
-        // Try to pick up forks
         if (sim.canEat()) {
           return { id: index, state: STATES.EATING, startTime: Date.now() };
         }
         return phil;
       
       case STATES.EATING:
-        // Check if eating duration is complete
         if (phil.startTime && Date.now() - phil.startTime > sim.eatingDuration) {
           return { id: index, state: STATES.THINKING, startTime: Date.now() };
         }
@@ -112,8 +107,6 @@ export const simulateNormalDining = (store, philosophers) => {
 };
 
 export const simulateDeadlock = (store, philosophers) => {
-  // All philosophers pick left fork, then wait for right fork
-  // This causes circular wait - deadlock
   
   return philosophers.map((phil, index) => {
     switch (phil.state) {
@@ -121,7 +114,6 @@ export const simulateDeadlock = (store, philosophers) => {
         return { ...phil, state: STATES.HUNGRY };
       
       case STATES.HUNGRY:
-        // All pick left fork first
         return { ...phil, state: STATES.BLOCKED };
       
       default:
@@ -131,17 +123,13 @@ export const simulateDeadlock = (store, philosophers) => {
 };
 
 export const simulateStarvation = (store, philosophers) => {
-  // One philosopher struggles to get both forks while others eat
-  // Simulate unfair fork allocation
   
   return philosophers.map((phil, index) => {
     if (index === 0) {
-      // Philosopher 0 keeps trying but rarely succeeds
       switch (phil.state) {
         case STATES.THINKING:
           return { ...phil, state: STATES.HUNGRY };
         case STATES.HUNGRY:
-          // Very low chance of eating
           if (Math.random() < 0.05) {
             return { ...phil, state: STATES.EATING, startTime: Date.now() };
           }
@@ -155,7 +143,6 @@ export const simulateStarvation = (store, philosophers) => {
           return phil;
       }
     } else {
-      // Other philosophers eat normally
       const sim = new PhilosopherSimulation(index, store);
       switch (phil.state) {
         case STATES.THINKING:
