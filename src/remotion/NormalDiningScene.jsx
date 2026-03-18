@@ -1,6 +1,5 @@
 import { Composition } from 'remotion';
 
-// Placeholder for the Normal Dining Remotion scene
 export const NormalDiningScene = () => {
   return (
     <div style={{ width: '100%', height: '100%', background: 'black', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -9,7 +8,6 @@ export const NormalDiningScene = () => {
   );
 };
 
-// Register the composition (Remotion CLI will pick this up)
 export const RemotionRoot = () => (
   <>
     <Composition

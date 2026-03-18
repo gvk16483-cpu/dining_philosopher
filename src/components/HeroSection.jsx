@@ -8,7 +8,7 @@ import ReactBitsGlowButton from './ReactBitsGlowButton';
 export const HeroSection = ({ onStartSimulation }) => {
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-      {/* ReactBits animated particles background */}
+      {/* ReactBits*/}
       <ReactBitsParticles />
 
       <motion.div
@@ -17,7 +17,7 @@ export const HeroSection = ({ onStartSimulation }) => {
         transition={{ duration: 0.8 }}
         className="text-center px-4 max-w-4xl mx-auto"
       >
-        {/* Main Heading with ReactBits SplitText animation */}
+        {/* Main Heading with ReactBits */}
         <motion.h1
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}

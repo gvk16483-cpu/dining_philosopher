@@ -1,7 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, interpolate, spring } from 'remotion';
 
-// Placeholder avatars and states for demonstration
 const PHILOSOPHERS = [
   { name: 'P1', emoji: '🧑‍🎓' },
   { name: 'P2', emoji: '🤔' },
@@ -17,9 +16,7 @@ const STATE_COLORS = {
   blocked: '#ef4444',
 };
 
-// Forks: 0-4, each between philosophers
 const getForkOwner = (frame) => {
-  // Simple demo: animate forks being picked up in sequence
   const step = Math.floor(frame / 40) % 5;
   return Array(5).fill(null).map((_, i) => (i === step ? step : null));
 };
@@ -28,7 +25,6 @@ export const DiningPhilosophersRemotion = () => {
   const frame = useCurrentFrame();
   const forkOwners = getForkOwner(frame);
 
-  // Animate philosopher states
   const getPhilosopherState = (idx) => {
     if (frame < 40) return 'thinking';
     if (frame < 80) return idx === 0 ? 'hungry' : 'thinking';
@@ -44,7 +40,6 @@ export const DiningPhilosophersRemotion = () => {
     return 'thinking';
   };
 
-  // Table geometry
   const center = { x: 640, y: 360 };
   const radius = 220;
 

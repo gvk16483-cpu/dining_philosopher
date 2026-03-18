@@ -5,7 +5,6 @@ import { FORK_STATES } from '../store/simulationStore';
 export const Fork = ({ forkId, position, state }) => {
   const isHeld = state === FORK_STATES.HELD;
   
-  // Calculate rotation based on position
   const rotations = [0, 72, 144, 216, 288];
   const rotation = rotations[forkId];
 

@@ -1,4 +1,4 @@
-// Narration scripts for different scenarios
+
 export const NARRATION_SCRIPTS = {
   intro: {
     text: "The Dining Philosophers Problem is a classic synchronization problem in operating systems. Five philosophers sit around a circular table. Between each philosopher is one fork. Each philosopher needs two forks to eat. When a philosopher finishes eating, they put down their forks and think for a while.",
@@ -36,18 +36,12 @@ export const NARRATION_SCRIPTS = {
   },
 };
 
-// Utility to synthesize speech using Web Audio API or Howler
-// For now, we'll use a placeholder that can be replaced with actual audio URLs
 export const generateNarration = async (scriptKey, audioEnabled = true) => {
   if (!audioEnabled) return null;
   
   const script = NARRATION_SCRIPTS[scriptKey];
   if (!script) return null;
   
-  // In a real implementation, you would:
-  // 1. Use Web Speech API for text-to-speech
-  // 2. Or provide pre-recorded audio files
-  // 3. Or use a third-party service like Google Cloud Text-to-Speech
   
   return {
     text: script.text,
@@ -56,7 +50,6 @@ export const generateNarration = async (scriptKey, audioEnabled = true) => {
   };
 };
 
-// Mock Web Audio playback
 export class AudioPlayer {
   constructor() {
     this.isPlaying = false;
@@ -71,7 +64,6 @@ export class AudioPlayer {
     this.currentTime = 0;
     this.callback = onComplete;
     
-    // Simulate audio playback
     this.timeout = setTimeout(() => {
       this.isPlaying = false;
       if (this.callback) {
@@ -93,5 +85,4 @@ export class AudioPlayer {
   }
 }
 
-// Global audio manager
 export const audioManager = new AudioPlayer();

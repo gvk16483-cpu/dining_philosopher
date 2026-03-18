@@ -23,7 +23,6 @@ html, body {
   overflow: hidden;
 }
 
-/* Custom scrollbar for modals */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -35,7 +34,6 @@ html, body {
   border-radius: 3px;
 }
 
-/* Glow button hover animation */
 .glow-btn {
   position: relative;
   overflow: hidden;

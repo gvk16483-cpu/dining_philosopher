@@ -12,17 +12,12 @@ const STATE_COLORS = {
 };
 
 const CHARACTER_CONFIGS = [
-  // 0: Navya (Girl)
+  
   { name: 'Navya', gender: 'female', hairStyle: 'long', hairColor: '#2b1b17', skinColor: '#f0c8a0', outfitColor: '#60a5fa', hat: null },
-  // 1: Ashrith (Boy)
   { name: 'Ashrith', gender: 'male', hairStyle: 'short', hairColor: '#3d2314', skinColor: '#e8b090', outfitColor: '#f87171', hat: 'cap' },
-  // 2: Pardhu (Boy)
   { name: 'Pardhu', gender: 'male', hairStyle: 'messy', hairColor: '#4a2c6e', skinColor: '#f5deb3', outfitColor: '#4ade80', hat: 'beanie' },
-  // 3: Divya (Girl)
   { name: 'Divya', gender: 'female', hairStyle: 'long-bun', hairColor: '#1a1a1a', skinColor: '#e8b090', outfitColor: '#c084fc', hat: null },
-  // 4: Ganesh (Boy)
   { name: 'Ganesh', gender: 'male', hairStyle: 'short', hairColor: '#2b1b17', skinColor: '#d2b48c', outfitColor: '#facc15', hat: 'cone' },
-  // 5: Vamsi (Handsome Boy)
   { name: 'Vamsi', gender: 'male', hairStyle: 'styled', hairColor: '#0f172a', skinColor: '#ffdfc4', outfitColor: '#f1f5f9', hat: null, glasses: null },
 ];
 
@@ -161,8 +156,6 @@ export function PhilosopherModel({ idx, state, angle }) {
   const colors = useMemo(() => STATE_COLORS[state] || STATE_COLORS.thinking, [state]);
   const config = CHARACTER_CONFIGS[idx % CHARACTER_CONFIGS.length];
   
-  // Blend outfit color with state color slightly, or keep distinct?
-  // We'll use outfitColor for the body, but state colors for a subtle emissive glow to represent state
   const bodyEmissive = colors.accent;
 
   useFrame(({ clock }) => {
@@ -195,7 +188,6 @@ export function PhilosopherModel({ idx, state, angle }) {
         targetLeftX = -0.8 + Math.sin(t * 2 + pIdx) * 0.15;
         targetRightX = -0.8 + Math.sin(t * 2 + pIdx + 0.5) * 0.15;
       } else if (state === 'eating') {
-        // Higher arm raising corresponding to fork bringing food to mouth
         targetLeftX = -1.6 + Math.sin(t * 8 + pIdx) * 0.2;
         targetRightX = -1.6 + Math.sin(t * 8 + pIdx + 1) * 0.2;
         targetLeftZ = 0.2;
@@ -278,7 +270,7 @@ export function PhilosopherModel({ idx, state, angle }) {
       onPointerOut={(e) => { e.stopPropagation(); setHoveredPhilosopher(null); }}
       onClick={(e) => { e.stopPropagation(); setSelectedPhilosopher(idx); }}
     >
-      {/* Body / Torso — custom color with state emissive glow */}
+      {/* Body / Torso  */}
       <group ref={bodyRef}>
         <mesh position={[0, 0.65, 0]} castShadow>
           <cylinderGeometry args={[0.28, 0.38, 0.9, 16]} />

@@ -7,7 +7,6 @@ export function ForkModel({ idx, heldByPhilosopher, philosopherState }) {
   const groupRef = useRef();
   const pCount = useSimulationStore(s => s.philosophers.length);
 
-  // Fork rests between philosopher idx and idx+1
   const restAngle = ((idx + 0.5) / pCount) * Math.PI * 2 - Math.PI / 2;
   const restDist = 3.0;
   const restPos = useMemo(() => new THREE.Vector3(
@@ -25,19 +24,15 @@ export function ForkModel({ idx, heldByPhilosopher, philosopherState }) {
     if (heldByPhilosopher !== null && heldByPhilosopher !== undefined) {
       const philAngle = (heldByPhilosopher / pCount) * Math.PI * 2 - Math.PI / 2;
       
-      // Determine if this specific fork (idx) is the philosopher's Left or Right fork
-      // The philosopher's left fork is idx == heldByPhilosopher
-      // The philosopher's right fork is idx == (heldByPhilosopher - 1 + pCount) % pCount
       const isLeftHand = idx === heldByPhilosopher;
       
       if (philosopherState === 'eating') {
         // Bring to mouth
         const handDist = 3.6;
         const mouthHeight = 1.35;
-        // Offset wider so we can see both forks distinctly
         const offsetAngle = isLeftHand ? -0.2 : 0.2;
         
-        // Bobbing motion for eating
+        // motion for eating
         const t = clock.elapsedTime;
         const eatingBob = Math.sin(t * 8 + heldByPhilosopher) * 0.08;
 
@@ -48,9 +43,7 @@ export function ForkModel({ idx, heldByPhilosopher, philosopherState }) {
         );
         targetRotRef.current.set(-0.8, isLeftHand ? 0.5 : -0.5, philAngle + (isLeftHand ? Math.PI : 0));
       } else {
-        // Just holding it (e.g. blocked, hungry waiting) -> resting on lap/lower
         const handDist = 3.9;
-        // Offset significantly so they sit clearly in the left or right lap space
         const offsetAngle = isLeftHand ? -0.25 : 0.25;
         
         targetPosRef.current.set(
@@ -61,16 +54,13 @@ export function ForkModel({ idx, heldByPhilosopher, philosopherState }) {
         targetRotRef.current.set(-0.2, 0, philAngle + (isLeftHand ? Math.PI / 4 : -Math.PI / 4));
       }
     } else {
-      // Resting on table cleanly between the two philosophers
       targetPosRef.current.copy(restPos);
       targetRotRef.current.set(Math.PI / 2, 0, restAngle);
     }
 
-    // Graceful, deliberate lerp for picking up / eating / putting down
     const lerpSpeed = 0.04;
     groupRef.current.position.lerp(targetPosRef.current, lerpSpeed);
     
-    // Smooth lerp rotation
     const curr = groupRef.current.rotation;
     curr.x += (targetRotRef.current.x - curr.x) * lerpSpeed;
     curr.y += (targetRotRef.current.y - curr.y) * lerpSpeed;
@@ -78,7 +68,6 @@ export function ForkModel({ idx, heldByPhilosopher, philosopherState }) {
   });
 
   const isHeld = heldByPhilosopher !== null && heldByPhilosopher !== undefined;
-  // If eating, maybe a brighter glow
   const isEating = isHeld && philosopherState === 'eating';
   
   const metalColor = isEating ? '#f59e0b' : isHeld ? '#fbbf24' : '#a8a8a8';

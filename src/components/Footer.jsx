@@ -107,7 +107,7 @@ export const Footer = () => {
           transition={{ duration: 2, repeat: Infinity }}
           className="text-center mt-8 text-gray-500 text-sm"
         >
-          Made with ❤️ for OS enthusiasts
+          Made for students
         </motion.div>
       </div>
     </motion.footer>

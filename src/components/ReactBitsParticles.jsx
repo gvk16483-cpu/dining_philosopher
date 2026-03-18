@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-// Simple ReactBits-style animated particles background
 const NUM_PARTICLES = 32;
 
 const random = (min, max) => Math.random() * (max - min) + min;

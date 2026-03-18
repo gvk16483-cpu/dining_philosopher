@@ -7,13 +7,12 @@ import { DiningTable3D } from './DiningTable3D';
 export const DiningTable = () => {
   const { simulationMode } = useSimulationStore();
 
-  // Run the simulation hook
   usePhilosopherSimulation();
 
   return (
     <section id="simulation" className="w-full min-h-[calc(100vh-120px)] flex flex-col items-center justify-center p-0 m-0 bg-transparent">
       <DiningTable3D />
-      {/* Mode Indicator (no emoji) */}
+      {/* Mode Indicator (without emoji) */}
       <div className="text-center mt-4">
         <div className="inline-block px-8 py-4 rounded-xl bg-slate-700/50 backdrop-blur border border-slate-600">
           <p className="text-sm text-gray-400 mb-2 font-semibold uppercase tracking-widest">Current Mode:</p>

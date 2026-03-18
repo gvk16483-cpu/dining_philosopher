@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSimulationStore } from '../store/simulationStore';
 
-// Removed static NAMES array
 const STATE_COLORS = {
   thinking: '#3b82f6',
   hungry: '#eab308',

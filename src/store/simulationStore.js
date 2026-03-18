@@ -10,7 +10,6 @@ const FORK_AVAILABLE = 'available';
 const FORK_HELD = 'held';
 
 export const useSimulationStore = create((set, get) => ({
-  // Philosopher states
   philosophers: Array(PHILOSOPHER_COUNT).fill(null).map((_, i) => ({
     id: i,
     state: THINKING,
@@ -19,10 +18,8 @@ export const useSimulationStore = create((set, get) => ({
     thinkingTime: 0,
   })),
 
-  // Fork states
   forks: Array(PHILOSOPHER_COUNT).fill(FORK_AVAILABLE),
 
-  // Simulation control
   isRunning: false,
   simulationMode: 'normal',
   speed: 1,
@@ -30,16 +27,13 @@ export const useSimulationStore = create((set, get) => ({
   audioEnabled: true,
   audioPlaying: false,
 
-  // UI interaction
   hoveredPhilosopher: null,
   selectedPhilosopher: null,
   showSolution: false,
 
-  // Solution related
   waiterActive: false,
   selectedSolution: null,
 
-  // Actions
   setPhilosopherState: (id, state) =>
     set((prevState) => {
       const newPhilosophers = [...prevState.philosophers];
@@ -98,7 +92,6 @@ export const useSimulationStore = create((set, get) => ({
     });
   },
 
-  // Constants
   PHILOSOPHER_COUNT,
   THINKING,
   HUNGRY,
