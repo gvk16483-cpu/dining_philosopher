@@ -20,7 +20,6 @@ export const usePhilosopherSimulation = () => {
     const updateSimulation = () => {
       const state = useSimulationStore.getState();
       
-      // Create independent draft copies to prevent intra-tick race conditions
       const nextPhilosophers = state.philosophers.map(p => ({ ...p }));
       const nextForks = [...state.forks];
 
@@ -53,7 +52,6 @@ export const usePhilosopherSimulation = () => {
         }
       }
 
-      // Apply all changes perfectly synchronously in ONE render batch
       useSimulationStore.setState(() => {
         return { 
           philosophers: nextPhilosophers, 
@@ -73,7 +71,6 @@ export const usePhilosopherSimulation = () => {
   }, [isRunning, simulationMode, speed]);
 };
 
-// -- Scenario Mutators (Draft Mutators) --
 
 function updateNormal(phil, leftForkId, rightForkId, forks) {
   switch (phil.state) {
@@ -115,7 +112,7 @@ function updateDeadlock(phil, leftForkId, forks) {
 
 function updateStarvation(phil, idx, leftForkId, rightForkId, forks) {
   if (idx === 0) {
-    // Navya struggles (Starvation: constantly grabs one fork, waits, then gives up and tries again)
+    // Navya struggles
     switch (phil.state) {
       case STATES.THINKING:
         phil.state = STATES.HUNGRY;
@@ -128,8 +125,7 @@ function updateStarvation(phil, idx, leftForkId, rightForkId, forks) {
         break;
       case STATES.BLOCKED:
         if (forks[rightForkId] === FORK_STATES.AVAILABLE) {
-           // Before she can grab the right fork, simulate dropping it out of frustration 90% of the time
-           if (Math.random() < 0.9) {
+            if (Math.random() < 0.9) {
              forks[leftForkId] = FORK_STATES.AVAILABLE;
              phil.state = STATES.HUNGRY;
            } else {
@@ -137,7 +133,6 @@ function updateStarvation(phil, idx, leftForkId, rightForkId, forks) {
              phil.state = STATES.EATING;
            }
         } else {
-           // Right fork isn't available, she gets frustrated and drops her left fork sometimes
            if (Math.random() < 0.1) {
              forks[leftForkId] = FORK_STATES.AVAILABLE;
              phil.state = STATES.HUNGRY;
@@ -154,7 +149,6 @@ function updateStarvation(phil, idx, leftForkId, rightForkId, forks) {
       default: break;
     }
   } else {
-    // Others eat normally but aggressively
     switch (phil.state) {
       case STATES.THINKING:
         if (Math.random() < 0.5) phil.state = STATES.HUNGRY;
@@ -177,7 +171,7 @@ function updateStarvation(phil, idx, leftForkId, rightForkId, forks) {
     }
   }
 }
-
+//Waiter solution
 function updateWaiter(phil, leftForkId, rightForkId, forks, philosophers) {
   const eatingCount = philosophers.filter(p => p.state === STATES.EATING).length;
   switch (phil.state) {
@@ -185,7 +179,6 @@ function updateWaiter(phil, leftForkId, rightForkId, forks, philosophers) {
       if (Math.random() < 0.2) phil.state = STATES.HUNGRY;
       break;
     case STATES.HUNGRY:
-      // Waiter allows them to pick up one fork ONLY IF it's safe (preventing all 6 from taking 1)
       if (eatingCount < COUNT - 2) {
          if (forks[leftForkId] === FORK_STATES.AVAILABLE) {
            forks[leftForkId] = phil.id;
