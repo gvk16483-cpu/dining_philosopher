@@ -1,4 +1,4 @@
-// Example narration script for Remotion scenes
+
 export const narrationTracks = [
   {
     scene: 'DiningPhilosophersRemotion',
@@ -9,6 +9,6 @@ export const narrationTracks = [
       'Notice how forks are shared and how deadlock can occur.',
       'Solutions to deadlock will be demonstrated in later scenes.'
     ],
-    timings: [0, 40, 80, 160, 400], // frame numbers for narration cues
+    timings: [0, 40, 80, 160, 400], 
   },
 ];
